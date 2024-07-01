@@ -1,10 +1,14 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, redirect, useNavigate } from 'react-router-dom';
+import { AUTH_API_ENDPOINT } from '../utils/constant';
+import { getMyProfile, getOtherUsers, getUser } from '../redux/userSlice';
+import { getAllPosts, getIsActive } from '../redux/postSlice';
 
 const TopNavigationBar = () => {
 
-    const user = useSelector(store => store.user.user);
+    const { user } = useSelector(store => store.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
@@ -13,9 +17,26 @@ const TopNavigationBar = () => {
         setIsOpen(!isOpen);
     };
 
-    const handleLogout = () => {
-        dispatch(setUser(null));
-        navigate("/login");
+    const handleLogout = async () => {
+        try {
+            const res = await axios.post(`${AUTH_API_ENDPOINT}/logout`, {
+                // headers: {
+                //     "Content-Type": "application/json"
+                // },
+                withCredentials: true,
+            });
+            console.log(res);
+            dispatch(getUser(null));
+            dispatch(getOtherUsers(null));
+            dispatch(getMyProfile(null));
+            dispatch(getAllPosts(null));
+            dispatch(getIsActive(false));
+            navigate("/login");
+        } catch (error) {
+            console.log(error);
+        }
+        // dispatch(setUser(null));
+        // navigate("/login");
     }
 
     return (
@@ -58,7 +79,7 @@ const TopNavigationBar = () => {
                     <Link to={`/profile/${user?.username}`} onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">Profile</Link>
                     <Link to="/notifications" onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">Notifications</Link>
                     <Link to="/bookmarks" onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">Bookamrks</Link>
-                    <Link to="/logout" onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">Logout</Link>
+                    <Link to="/logout" onClick={handleLogout} className="block py-2 px-4 hover:text-blue-400">Logout</Link>
                     {!user && <Link to="/signup" onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">Signup</Link>}
                     {!user && <Link to="/login" onClick={() => setIsOpen(false)} className="block py-2 px-4 hover:text-blue-400">Login</Link>}
                 </div>

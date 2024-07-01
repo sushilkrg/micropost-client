@@ -7,6 +7,7 @@ import { POST_API_ENDPOINT, USER_API_ENDPOINT } from '../utils/constant';
 import PostCard from './PostCard';
 import { followingUpdate } from '../redux/userSlice';
 import { getRefresh } from '../redux/postSlice';
+import toast from 'react-hot-toast';
 
 const Profile = () => {
 
@@ -36,15 +37,17 @@ const Profile = () => {
 
   const followAndUnfollowHandler = async () => {
     // if (profile?.followers?.includes(user?._id)) {
-      try {
-        axios.defaults.withCredentials = true;
-        const res = await axios.post(`${USER_API_ENDPOINT}/follow/${profile?._id}`);
-        console.log(res);
-        dispatch(followingUpdate(profile?._id));
-        dispatch(getRefresh());
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      axios.defaults.withCredentials = true;
+      const res = await axios.post(`${USER_API_ENDPOINT}/follow/${profile?._id}`);
+      console.log(res);
+      toast.success(res?.data?.message);
+      dispatch(followingUpdate(profile?._id));
+      dispatch(getRefresh());
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error);
+    }
     // }
   }
 

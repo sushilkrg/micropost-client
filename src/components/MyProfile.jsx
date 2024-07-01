@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import store from "../redux/store";
 import { Link } from "react-router-dom";
 
 const MyProfile = () => {

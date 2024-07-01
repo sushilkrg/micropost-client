@@ -1,17 +1,20 @@
 import React, { useRef, useState } from 'react'
 import { CiImageOn } from "react-icons/ci";
 import { BsEmojiSmileFill } from "react-icons/bs";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { POST_API_ENDPOINT } from '../utils/constant';
 import axios from 'axios';
+import { getRefresh } from '../redux/postSlice';
+import toast from 'react-hot-toast';
 
 const CreatePost = () => {
 
     const [postContent, setPostContent] = useState("");
     const [postImg, setPostImg] = useState(null);
-    const imgRef = useRef(null);
-
     const user = useSelector(store => store?.user?.user);
+    const imgRef = useRef(null);
+    const dispatch = useDispatch();
+
 
     const postCreate = async () => {
 
@@ -24,7 +27,12 @@ const CreatePost = () => {
                 body: JSON.stringify({ postContent, postImg }),
             });
             console.log(res);
+            dispatch(getRefresh());
+            if (res?.status === 200) {
+                toast.success(res?.data?.message);
+            }
         } catch (error) {
+            toast.error(error?.response?.data?.message);
             console.log(error);
         }
     }

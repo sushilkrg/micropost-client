@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
@@ -8,10 +9,10 @@ const Footer = () => {
                     &copy; 2024 Micropost - All rights reserved.
                 </div>
                 <div className="flex space-x-4 mt-2 md:mt-0">
-                    <a href="/" className="hover:text-white">About</a>
-                    <a href="/" className="hover:text-white">Help Center</a>
-                    <a href="/" className="hover:text-white">Privacy Policy</a>
-                    <a href="/" className="hover:text-white">Terms</a>
+                    <Link to="/" className="hover:text-white">About</Link>
+                    <Link to="/" className="hover:text-white">Help Center</Link>
+                    <Link to="/" className="hover:text-white">Privacy Policy</Link>
+                    <Link to="/" className="hover:text-white">Terms</Link>
                 </div>
             </div>
         </footer>

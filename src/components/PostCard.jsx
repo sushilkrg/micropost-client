@@ -1,11 +1,12 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaRegBookmark, FaRegComment, FaRegHeart } from 'react-icons/fa';
 import { MdDelete, MdOutlineDeleteOutline } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { getRefresh } from '../redux/postSlice';
 import { POST_API_ENDPOINT } from '../utils/constant';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const PostCard = ({ post }) => {
 
@@ -20,7 +21,9 @@ const PostCard = ({ post }) => {
             })
             console.log(res);
             dispatch(getRefresh());
+            toast.success(res?.data?.message);
         } catch (error) {
+            toast.error(error?.response?.data?.error);
             console.log(error);
         }
     }
@@ -31,9 +34,9 @@ const PostCard = ({ post }) => {
             const res = await axios.delete(`${POST_API_ENDPOINT}/${id}`);
             console.log(res);
             dispatch(getRefresh());
-            // toast.success(res.data.message);
+            toast.success(res?.data?.message);
         } catch (error) {
-            // toast.success(error.response.data.message);
+            toast.error(error?.response?.data?.error);
             console.log(error);
         }
     }
