@@ -24,7 +24,7 @@ const Profile = () => {
         withCredentials: true,
       });
 
-      console.log(res?.data);
+      // console.log(res?.data);
       setUserPosts(res?.data)
     } catch (error) {
       console.log(error);
@@ -40,7 +40,7 @@ const Profile = () => {
     try {
       axios.defaults.withCredentials = true;
       const res = await axios.post(`${USER_API_ENDPOINT}/follow/${profile?._id}`);
-      console.log(res);
+      // console.log(res);
       toast.success(res?.data?.message);
       dispatch(followingUpdate(profile?._id));
       dispatch(getRefresh());
@@ -54,7 +54,7 @@ const Profile = () => {
   return (
     <div className="w-full lg:w-1/2 p-4 bg-gray-900 text-white h-auto lg:h-screen overflow-y-scroll no-scrollbar">
       <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-4xl">
-        <h1>Profile page</h1>
+        {/* <h1>Profile page</h1> */}
         <div className="flex flex-col md:flex-row items-center md:items-start">
           <img
             src="https://cdn.pixabay.com/photo/2023/05/18/13/40/cristiano-ronaldo-8002334_1280.png"

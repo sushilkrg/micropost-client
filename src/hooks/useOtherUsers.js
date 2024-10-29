@@ -11,7 +11,7 @@ const useOtherUsers = () => {
       const res = await axios.get(`${USER_API_ENDPOINT}/suggested`, {
         withCredentials: true,
       });
-      console.log(res.data);
+      // console.log(res.data);
       dispatch(getOtherUsers(res.data));
     } catch (error) {
       console.log(error);

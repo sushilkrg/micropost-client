@@ -12,15 +12,12 @@ const Posts = () => {
 
     const { posts } = useSelector(store => store.post);
     // setAllPosts(posts);
-    console.log(allPosts);
-    console.log(posts);
+    // console.log(allPosts);
+    // console.log(posts);
     return (
         <div>
             {/* {Object.entries(posts)?.map((post) => <PostCard key={post?._id} post={post[1]} />)} */}
             {(posts)?.map((post) => <PostCard key={post?._id} post={post} />)}
-            {/* <PostCard />
-            <PostCard />
-            <PostCard /> */}
         </div>
     )
 }

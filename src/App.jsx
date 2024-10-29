@@ -16,14 +16,14 @@ import { Toaster } from 'react-hot-toast';
 const App = () => {
 
   const { user } = useSelector(store => store.user);
-  console.log(user);
+  // console.log(user);
 
   return (
     <>
       <Router>
         <div className="min-h-screen bg-gray-900 text-white">
           {user && <TopNavigationBar />}
-          <div className="flex flex-col lg:flex-row items-center justify-center">
+          <div className="container mx-auto flex flex-col lg:flex-row  justify-center">
             {user && <Sidebar />}
             <Routes>
               <Route path="/" element={user ? <MainContent /> : <Navigate to="/login" />} />

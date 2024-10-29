@@ -12,14 +12,14 @@ const PostCard = ({ post }) => {
 
     const { user } = useSelector(store => store.user);
     const dispatch = useDispatch();
-    console.log(post);
+    // console.log(post);
 
     const likeOrDislikeHandler = async (id) => {
         try {
             const res = await axios.post(`${POST_API_ENDPOINT}/like/${id}`, { id: user?._id }, {
                 withCredentials: true
             })
-            console.log(res);
+            // console.log(res);
             dispatch(getRefresh());
             toast.success(res?.data?.message);
         } catch (error) {
@@ -32,7 +32,7 @@ const PostCard = ({ post }) => {
         try {
             axios.defaults.withCredentials = true;
             const res = await axios.delete(`${POST_API_ENDPOINT}/${id}`);
-            console.log(res);
+            // console.log(res);
             dispatch(getRefresh());
             toast.success(res?.data?.message);
         } catch (error) {
@@ -51,12 +51,14 @@ const PostCard = ({ post }) => {
             <div className="flex-1">
                 <div className="flex justify-between items-center">
                     <div>
-                        <div>
-                            <Link to={`/profile/${post?.user?.username}`}>
-                                <span className="text-lg font-bold">{post?.user?.fullName}</span>
-                            </Link>
-                            <span className="text-gray-400 ml-2">@{post?.user?.username}</span>
-                            <span className="text-gray-400 ml-2">1h ago</span>
+                        <div className='flex flex-row justify-between'>
+                            <div className="flex flex-col">
+                                <Link to={`/profile/${post?.user?.username}`}>
+                                    <div className="text-lg font-bold ml-2">{post?.user?.fullName}</div>
+                                </Link>
+                                <div className="text-gray-400 text-sm ml-2">@{post?.user?.username}</div>
+                            </div>
+                            <div className="text-gray-400 text-sm ml-12">1h ago</div>
                         </div>
                     </div>
                     {/* <div className="flex space-x-1 items-center"> */}
@@ -72,16 +74,16 @@ const PostCard = ({ post }) => {
                         )
                     }
                 </div>
-                <p className="mt-2">{post?.postContent}</p>
-                <div className='py-3'>
-                    <img className="w-full h-full" src={post?.postImg || "https://media.cnn.com/api/v1/images/stellar/prod/230621042149-01-cristiano-ronaldo-euro-200-apps-062023-restricted.jpg?c=original"} alt="image" />
-                </div>
+                <p className="mt-4">{post?.postContent}</p>
+                {post?.postImg && <div className='py-3'>
+                    <img className="w-full h-full md:h-[350px]" src={post?.postImg} alt="image" />
+                </div>}
 
                 {/* like, bookmark, comment   */}
-                <div className='flex justify-between mt-3'>
+                <div className='flex justify-between mt-6'>
                     <div className='flex gap-4 items-center w-2/3 justify-between'>
                         <div onClick={() => likeOrDislikeHandler(post?._id)} className='flex w-1/3 justify-end gap-2 items-center'>
-                            <FaRegHeart className='w-4 h-4 text-slate-500 hover:scale-125 hover:bg-red-500 rounded-full cursor-pointer ' /><p>{post?.likes?.length > 0 ? post?.likes?.length : '0'}</p>
+                            <FaRegHeart className='w-4 h-4 text-slate-500 hover:scale-125 hover:fill-red-500 rounded-full cursor-pointer ' /><p>{post?.likes?.length > 0 ? post?.likes?.length : '0'}</p>
                         </div>
                         <div className='flex w-1/3 justify-end gap-2 items-center'>
                             <FaRegComment className='w-4 h-4 text-slate-500 cursor-pointer' />

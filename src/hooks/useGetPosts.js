@@ -1,10 +1,13 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { POST_API_ENDPOINT } from "../utils/constant";
 import { useEffect } from "react";
 import axios from "axios";
 import { getAllPosts } from "../redux/postSlice";
+// import store from "../redux/store";
 
 const useGetPosts = () => {
+
+  const refresh = useSelector((store) => store?.post?.refresh);
   const dispatch = useDispatch();
   let followingUsersPosts;
   let allOtherPosts;
@@ -15,7 +18,7 @@ const useGetPosts = () => {
       const res = await axios.get(`${POST_API_ENDPOINT}/following`, {
         withCredentials: true,
       });
-      console.log(res?.data);
+      // console.log(res?.data);
       //   dispatch(getAllPosts(res?.data));
       followingUsersPosts = res?.data;
     } catch (error) {
@@ -28,14 +31,14 @@ const useGetPosts = () => {
       const res = await axios.get(`${POST_API_ENDPOINT}/all`, {
         withCredentials: true,
       });
-      console.log(res?.data);
+      // console.log(res?.data);
       allOtherPosts = res?.data;
 
       // todo - merging problem now
       allPosts = { ...followingUsersPosts, ...allOtherPosts };
       // dispatch(getAllPosts(allPosts));
       dispatch(getAllPosts(allOtherPosts));
-      console.log(allOtherPosts);
+      // console.log(allOtherPosts);
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +48,7 @@ const useGetPosts = () => {
   useEffect(() => {
     // fetchFollowingUsersPosts();
     fetchAllPosts();
-  }, []);
+  }, [refresh]);
 };
 
 export default useGetPosts;

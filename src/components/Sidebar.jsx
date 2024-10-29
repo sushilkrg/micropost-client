@@ -4,7 +4,7 @@ import MyProfile from './MyProfile';
 
 const Sidebar = () => {
   return (
-    <div className="w-full lg:w-1/4 p-4 bg-gray-900 text-white h-auto lg:h-screen">
+    <div className="w-full lg:w-1/4 p-4 bg-gray-900 text-white h-auto ">
       <MyProfile/>
       <WhoToFollow/>
     </div>

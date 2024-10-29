@@ -17,7 +17,6 @@ const CreatePost = () => {
 
 
     const postCreate = async () => {
-
         try {
             const res = await axios.post(`${POST_API_ENDPOINT}/create`, { postContent, postImg, user: user?._id }, {
                 headers: {
@@ -26,13 +25,15 @@ const CreatePost = () => {
                 withCredentials: true,
                 body: JSON.stringify({ postContent, postImg }),
             });
-            console.log(res);
+            // console.log(res);
+            setPostContent("");
+            setPostImg(null);
             dispatch(getRefresh());
             if (res?.status === 200) {
                 toast.success(res?.data?.message);
             }
         } catch (error) {
-            toast.error(error?.response?.data?.message);
+            toast.error(error?.response?.data?.error);
             console.log(error);
         }
     }
@@ -72,6 +73,7 @@ const CreatePost = () => {
                         type="text"
                         placeholder="What's happening?"
                         className="w-full p-2 bg-gray-700 rounded"
+                        value={postContent}
                         onChange={(e) => setPostContent(e.target.value)}
                     />
                 </div>

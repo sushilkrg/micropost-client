@@ -13,7 +13,7 @@ const useProfile = (username) => {
         const res = await axios.get(`${USER_API_ENDPOINT}/profile/${username}`, {
           withCredentials: true,
         });
-        console.log(res?.data);
+        // console.log(res?.data);
         dispatch(getMyProfile(res?.data));
       } catch (error) {
         console.log(error);

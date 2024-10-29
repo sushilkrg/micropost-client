@@ -25,7 +25,7 @@ const TopNavigationBar = () => {
                 // },
                 withCredentials: true,
             });
-            console.log(res);
+            // console.log(res);
             dispatch(getUser(null));
             dispatch(getOtherUsers(null));
             dispatch(getMyProfile(null));
